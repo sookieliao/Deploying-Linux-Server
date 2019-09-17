@@ -29,5 +29,10 @@ A user or application only has enough permission to do its job, nothing extra.
   This will create a user with username **userName**
   ![Create user.](/createUser.png)
   
-  Then we can login in as newly created user by running `ssh newUserName@127.0.0.1 -p 2222`.
+  Then we can login in as newly created user by running `ssh newUserName@127.0.0.1 -p 2222`
+  (the `vagrant ssh` is actually just a shortcut for this command.)
+  - __SSH__ is the application we use to remotely connect to the server
+  - __127.0.0.1__ is the IP address we wanna connect to, which is a standard IP address for localhost or the same computer I'm currently on
+  - __newUserName@__ specifies the user we wanna login as
+  - __-p 2222__ flag tells us to connect using port 2222, so when vagrant sets up our virtual machine, it automatically sets up this port locally, and forwards it to the virtual machine. 
   ![Login in as new user.](/login.png)
