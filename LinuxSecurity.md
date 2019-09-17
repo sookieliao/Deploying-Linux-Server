@@ -27,7 +27,7 @@ A user or application only has enough permission to do its job, nothing extra.
 
 #### Run `sudo adduser userName`
   This will create a user with username **userName**
-  ![Create user.](/images/createUser.png)
+  ![Create user.](/createUser.png)
   
   Then we can login in as newly created user by running `ssh newUserName@127.0.0.1 -p 2222`.
-  ![Login in as new user.](/images/login.png)
+  ![Login in as new user.](/login.png)
