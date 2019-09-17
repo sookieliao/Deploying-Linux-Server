@@ -36,3 +36,13 @@ A user or application only has enough permission to do its job, nothing extra.
   - __newUserName@__ specifies the user we wanna login as
   - __-p 2222__ flag tells us to connect using port 2222, so when vagrant sets up our virtual machine, it automatically sets up this port locally, and forwards it to the virtual machine. 
   ![Login in as new user.](/login.png)
+
+### Giving Sudo Access
+  since newly created usuer probably doesn't belong to the administration group, he/she won't be able to perform the administrative operations. To fix this, we'll grant the new user with the right to do sudo!
+  - First of all, let's run `/etc/sudoers` to check who has right to do sudo operations.
+    We can see root and admin beling listed in the file.
+    ![](/sudo.png)
+    For some distribution server, we can directly modify here and insert the new username as the rest. But it's a bit different for Ubuntu. At the bottom from the previous image, there's this line `#includedir /etc/sudoers.d`, which makes the server includes users in __sudoers.d__ as if they were written directly in sudoders file. This is common pattern, since distribution updates could over the sudoers file. And if that were happen, we could lose all users added here. By keeping the customization in the other directory, they system elimicates that risk.
+  - Let's add our new user into sudoers.d file by creating a copy of an existing one, say, vagrant, here's the command 
+    `sudo cp /etc/sudoers.d/vagrant /etc/sudoers.d/newUserName`.
+  - Then let's edit the /`/etc/sudoers.d/newUserName` file by changing "__vagrant__ ALL=(ALL) NOPASSWD:ALL" to "__newUserName__ ALL=(ALL) NOPASSWD:ALL", and save it.
