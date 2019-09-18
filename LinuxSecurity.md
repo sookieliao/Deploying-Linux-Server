@@ -26,7 +26,7 @@ A user or application only has enough permission to do its job, nothing extra.
 ### Managing Users
 
 #### Run `sudo adduser userName`
-  This will create a user with username **userName**
+  This will create a user with username **userName** After entering passwords, some questions will pop up, those are optional.
   ![Create user.](/createUser.png)
   
   Then we can login in as newly created user by running `ssh newUserName@127.0.0.1 -p 2222`
@@ -46,3 +46,14 @@ A user or application only has enough permission to do its job, nothing extra.
   - Let's add our new user into sudoers.d file by creating a copy of an existing one, say, vagrant, here's the command 
     `sudo cp /etc/sudoers.d/vagrant /etc/sudoers.d/newUserName`.
   - Then let's edit the /`/etc/sudoers.d/newUserName` file by changing "__vagrant__ ALL=(ALL) NOPASSWD:ALL" to "__newUserName__ ALL=(ALL) NOPASSWD:ALL", and save it.
+  - Just to mention, we can force a user to change the password by running `sudo passwd -e username`, which will set the username's password to expired.
+  
+### Key Based Authentication
+Instead of relying on passwords, key-based authentication replies on physical files located on the server and your personal machine - the one you're logging in from.
+#### Basic Concept 
+  1. The server will generate a random message and send to the client.
+  2. After receiving the message, the client will encrypt the message with their __private key__. And send that encrypted message back to the server.
+  3. After receiving the encrypted message, the server will decrypt this message with their __public key__, and if the decrypted message equals the value they sent, the client is authenticated.
+![](/keyBasedAuth.png)
+#### Implementation
+  1. Generating the key pairs in our **local**, remember, ***you never wanna share your private jey with ANYONE ELSE!***
