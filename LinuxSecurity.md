@@ -56,4 +56,18 @@ Instead of relying on passwords, key-based authentication replies on physical fi
   3. After receiving the encrypted message, the server will decrypt this message with their __public key__, and if the decrypted message equals the value they sent, the client is authenticated.
 ![](/keyBasedAuth.png)
 #### Implementation
-  1. Generating the key pairs in our **local**, remember, ***you never wanna share your private jey with ANYONE ELSE!***
+  1. Generating the key pairs in our **local**, remember, ***you never wanna share your private jey with ANYONE ELSE!*** We can do this by running `ssh-keygen`. After executing the command, two files will be generated, theidentification and the public key (.pub), and the .pub file is the one we're gonna place in the server to perform key-based authentication.
+  
+  2. To place the public key on the server, we must first login as the user we wanna perform key-based authentication. 
+  
+  3. Once logged in, create a **.ssh** directory, where all our key related files must be stored, by `mkdir .ssh`.
+  
+  4. Then create another file within this directory called authorized_keys, which will store all of the public keys that **this account** is allowed to use for authentication, with one key per line in that file. We do this by running command `touch .ssh/authorized_keys`.  ([What's Touch](https://www.geeksforgeeks.org/touch-command-in-linux-with-examples/))
+  
+  5. Back to local machine, read out the contents in the .pub file with command `cat .ssh/filename.pub`, copy them.
+  
+  6. Back to server, edit the authorized_keys file by `nano .ssh/authorized_keys`, paste in the contents, and save it. 
+  
+  7. Last step, we need to set up specific permissions for this user by running these commands :`chmod 700 .ssh` and `chmod 644 .ssh/authorized_keys`.
+  
+  8. It's done! We can then try to log in to the server as the new user, but instead of using passwords, we now do `ssh newUserName@127.0.0.1 -p 2222 -i ~/.ssh/keyPairIdentificationFile`.
